@@ -39,7 +39,20 @@
         ],
 
     ];
+        $filterHotels = [];
 
+        if(isset($_GET['parking']) && $_GET['parking'] === "1") {
+
+            foreach ($hotels as $hotel) {
+                if ($hotel['parking'] == true) {
+                    $filterHotels[] = $hotel;
+                }
+            
+            }
+        } else {
+            $filterHotels = $hotel;
+        }
+   
 ?>
 
 <!DOCTYPE html>
@@ -54,59 +67,70 @@
 </head>
 <body>
 <header>
-    <form action="index.php" method="GET">
-        <fieldset>
-           
-             <div class="mb-3">
-                <label for="parking" class="form-label">Parking</label>
-                 <select id="parking" class="form-select"name='parking'>
-                    <option value='1'>Si</option>
-                 </select>
-            </div>
-              
+    <div class="container"> 
 
-                     <button type="submit" class="btn btn-primary">Hotel Filter</button>
-        </fieldset>
-    </form>
+        <div class="row">
+            <form action="index.php" method="GET">
+                <fieldset>
+                
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" value="1" id="packing" name="parking">
+                        <label class="form-check-label" for="parking">
+                            Parking
+                        </label>
+                    </div>
+                 </div>
+                 <div class="mb-3">
+                    <label for="vote" class="form-label">Vote</label>
+                    <input type="number" class="form-control" id="vote" name="vote">
+                </div>
+
+                 <button type="submit" class="btn btn-primary">Hotel Filter</button>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
 </header>
 
 <main>
 
-  <div class="container"> 
+    <div class="container"> 
 
-  <div class="row">
+       <div class="row">
 
-<table class=".table-striped-columns ">
-    <thead>
-        <tr>
-             <th scope="col">Name</th>
-             <th scope="col">Description</th>
-            <th scope="col">Parking</th>
-            <th scope="col">Vote</th>
-            <th scope="col">Distance from center</th>
-        </tr>
-    </thead>
-    <tbody>
+         <table class=".table-striped-columns ">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Parking</th>
+                    <th scope="col">Vote</th>
+                    <th scope="col">Distance from center</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    <?php foreach($hotels as $hotel) { ?>
+            <?php foreach($filterHotels as $hotel) { ?>
 
+                <tr>
+                    <td><?php echo $hotel['name'];?></td>
+                    <td><?php echo $hotel['description'];?></td>
+                    <td><?php echo $hotel['parking']?'Yes':'No';?></td>
+                    <td><?php echo $hotel['vote'];?></td>
+                    <td><?php echo $hotel['distance_to_center'];?></td>
 
-        <tr>
-            <td><?php echo $hotel['name'];?></td>
-            <td><?php echo $hotel['description'];?></td>
-            <td><?php echo $hotel['parking']?'Yes':'No';?></td>
-            <td><?php echo $hotel['vote'];?></td>
-            <td><?php echo $hotel['distance_to_center'];?></td>
+                    </tr>
 
-        </tr>
+                        <?php } ?>
+            
+                    </tbody>
+         </table>
 
-        <?php } ?>
-    
-    </tbody>
-</table>
-</div>
+       </div>
+    </div>
 
-</div>
 
 </main>
 
@@ -123,6 +147,7 @@
             -Distance to center: <?php echo $hotel['distance_to_center'];?>
            
         </li>
+
     <?php } ?>
 
 </ul>
