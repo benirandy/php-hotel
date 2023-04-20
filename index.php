@@ -51,7 +51,7 @@
             }
         } else {
             $filterHotels = $hotel;
-        }
+          }
    
 ?>
 
